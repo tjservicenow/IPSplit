@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subnet and IP Address Converter</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>!!...SLICER...!!</h1>
+    
+    <h2>Convert IP Addresses</h2>
+    <label for="ipAddresses">Enter IP Addresses (comma-separated):</label>
+    <input type="text" id="ipAddresses" placeholder="192.168.1.1, 10.0.0.1">
+    <button onclick="convertIPs()">Convert IPs</button>
+    <table id="ipTable">
+        <thead>
+            <tr>
+                <th>IP Address</th>
+                <th>3 Octet</th>
+                <th>2 Octet</th>
+            </tr>
+        </thead>
+        <tbody id="ipTableBody">
+        </tbody>
+    </table>
+    
+    <h2>Create Subnets</h2>
+    <label for="subnet">Enter Subnet (e.g., 192.168.1.0/24):</label>
+    <input type="text" id="subnet" placeholder="192.168.1.0/24">
+    <button onclick="createSubnets()">Create Subnets</button>
+    <p id="subnetResult"></p>
+    
+    <script>
+        function convertIPs() {
+            const ipInput = document.getElementById('ipAddresses').value;
+            const ipArray = ipInput.split(',').map(ip => ip.trim());
+            const tableBody = document.getElementById('ipTableBody');
+            tableBody.innerHTML = ''; // Clear previous results
+
+            ipArray.forEach(ip => {
+                const octets = ip.split('.');
+                if (octets.length === 4) {
+                    const threeOctet = `${octets[0]}.${octets[1]}.${octets[2]}`;
+                    const twoOctet = `${octets[0]}.${octets[1]}`;
+                    const row = `<tr>
+                                    <td>${ip}</td>
+                                    <td>${threeOctet}</td>
+                                    <td>${twoOctet}</td>
+                                 </tr>`;
+                    tableBody.innerHTML += row;
+                } else {
+                    const row = `<tr>
+                                    <td>${ip}</td>
+                                    <td colspan="2">Invalid IP Address</td>
+                                 </tr>`;
+                    tableBody.innerHTML += row;
+                }
+            });
+        }
+
+        function createSubnets() {
+            const subnetInput = document.getElementById('subnet').value;
+            // Logic to create subnets (this is a placeholder)
+            const result = `Subnets for ${subnetInput} would be calculated here.`;
+            document.getElementById('subnetResult').innerText = result;
+        }
+    </script>
+</body>
+</html>
